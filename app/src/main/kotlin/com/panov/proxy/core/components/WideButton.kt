@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -24,7 +23,7 @@ import com.panov.proxy.R
 import com.panov.proxy.core.theme.ProxyTheme
 
 @Composable
-fun AdvancedButton(
+fun WideButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -57,13 +56,15 @@ fun AdvancedButton(
         }
         Column(
             modifier = Modifier
+                .weight(1f)
                 .heightIn(32.dp)
-                .padding(4.dp, 0.dp)
-                .weight(1f),
+                .padding(4.dp, 0.dp),
             verticalArrangement = Arrangement.Center
         ) {
             if (title != null) {
-                Text(text = title, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = title, style = MaterialTheme.typography.titleMedium
+                )
             }
             if (description != null) {
                 Text(
@@ -75,9 +76,13 @@ fun AdvancedButton(
         }
         if (isExternal != null) {
             Icon(
-                painter = painterResource(if (isExternal) R.drawable.icon_arrow_outward else R.drawable.icon_arrow_right),
-                contentDescription = null,
-                modifier = Modifier.size(32.dp)
+                painter = painterResource(
+                    if (isExternal) {
+                        R.drawable.icon_arrow_outward
+                    } else {
+                        R.drawable.icon_arrow_right
+                    }
+                ), contentDescription = null, modifier = Modifier.size(32.dp)
             )
         }
     }
@@ -85,21 +90,37 @@ fun AdvancedButton(
 
 @Preview
 @Composable
-private fun PreviewAdvancedButtons() {
+private fun PreviewWideButtons() {
     ProxyTheme {
         Column(
             modifier = Modifier
-                .width(360.dp)
+                .fillMaxWidth()
                 .padding(PaddingValues(16.dp)),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            AdvancedButton({})
-            AdvancedButton({}, title = "Title")
-            AdvancedButton({}, title = "Title", description = "Description")
-            AdvancedButton({}, title = "Title", description = "Description", isExternal = true)
-            AdvancedButton({}, title = "Title", description = "Description", isExternal = false)
-            AdvancedButton(
+            WideButton({})
+            WideButton(
+                onClick = {}, title = "Title"
+            )
+            WideButton(
+                onClick = {}, title = "Title", description = "Description"
+            )
+            WideButton(
                 onClick = {},
+                icon = painterResource(R.drawable.icon_add),
+                title = "Title",
+                description = "Description"
+            )
+            WideButton(
+                onClick = {},
+                icon = painterResource(R.drawable.icon_add),
+                title = "Title",
+                description = "Description",
+                isExternal = false
+            )
+            WideButton(
+                onClick = {},
+                enabled = false,
                 icon = painterResource(R.drawable.icon_add),
                 title = "Title",
                 description = "Description",
