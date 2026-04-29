@@ -17,6 +17,10 @@ import com.panov.proxy.core.components.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 import com.panov.proxy.screens.home.HomeScreen
+import com.panov.proxy.screens.settings.SettingsGeneralScreen
+import com.panov.proxy.screens.settings.SettingsLibrariesScreen
+import com.panov.proxy.screens.settings.SettingsPrivacyScreen
+import com.panov.proxy.screens.settings.SettingsRoutingScreen
 import com.panov.proxy.screens.settings.SettingsScreen
 
 class MainActivity : ComponentActivity() {
@@ -69,24 +73,16 @@ class MainActivity : ComponentActivity() {
                         SettingsScreen(navigator)
                     }
                     composable(Routes.Settings.GENERAL) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_settings_general)
-                        ) {}
+                        SettingsGeneralScreen(navigator)
                     }
                     composable(Routes.Settings.ROUTING) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_settings_routing)
-                        ) {}
+                        SettingsRoutingScreen(navigator)
                     }
                     composable(Routes.Settings.PRIVACY) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_settings_privacy)
-                        ) {}
+                        SettingsPrivacyScreen(navigator)
                     }
                     composable(Routes.Settings.LIBRARIES) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_settings_libraries)
-                        ) {}
+                        SettingsLibrariesScreen(navigator)
                     }
                 }
             }
