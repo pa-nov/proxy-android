@@ -17,6 +17,7 @@ import com.panov.proxy.core.components.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 import com.panov.proxy.screens.home.HomeScreen
+import com.panov.proxy.screens.settings.SettingsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +66,7 @@ class MainActivity : ComponentActivity() {
                         ) {}
                     }
                     composable(Routes.SETTINGS) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_settings)
-                        ) {}
+                        SettingsScreen(navigator)
                     }
                     composable(Routes.Settings.GENERAL) {
                         HeaderScreen(
