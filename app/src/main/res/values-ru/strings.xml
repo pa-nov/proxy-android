@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="lang_code">ru</string>
+
     <string name="app_name">Proxy</string>
+    <string name="app_error">Error</string>
+    <string name="app_placeholder">Placeholder</string>
+
+    <string name="title_about">О приложении</string>
+    <string name="title_device">Информация об устройстве</string>
+    <string name="title_configs">Конфигурации</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_settings_general">Основные</string>
+    <string name="title_settings_routing">Маршрутизация</string>
+    <string name="title_settings_privacy">Конфиденциальность</string>
+    <string name="title_settings_libraries">Библиотеки</string>
 
 </resources>
