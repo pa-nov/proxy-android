@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.panov.proxy.core.components.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
+import com.panov.proxy.screens.about.AboutScreen
 import com.panov.proxy.screens.home.HomeScreen
 import com.panov.proxy.screens.settings.SettingsGeneralScreen
 import com.panov.proxy.screens.settings.SettingsLibrariesScreen
@@ -55,9 +56,7 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(navigator)
                     }
                     composable(Routes.ABOUT) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_about)
-                        ) {}
+                        AboutScreen(navigator)
                     }
                     composable(Routes.DEVICE) {
                         HeaderScreen(
