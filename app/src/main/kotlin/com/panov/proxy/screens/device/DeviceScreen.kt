@@ -1,0 +1,83 @@
+package com.panov.proxy.screens.device
+
+import android.content.res.Configuration
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.AndroidUiModes
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.panov.proxy.R
+import com.panov.proxy.core.components.HeaderScreen
+import com.panov.proxy.core.theme.ProxyTheme
+
+@Composable
+fun DeviceScreen(navigator: NavHostController) {
+    val container = LocalWindowInfo.current.containerDpSize
+    val display = LocalResources.current.displayMetrics
+    val config = LocalConfiguration.current
+    val info = buildString {
+        appendLine("Brand: ${Build.MANUFACTURER}")
+        appendLine("Model: ${Build.MODEL}")
+        appendLine("Mobile Network Code: ${config.mnc}")
+        appendLine("Mobile Country Code: ${config.mcc}")
+        appendLine()
+        appendLine("System Language : ${config.locales[0].language}")
+        appendLine("System Theme    : ${if (isSystemInDarkTheme()) "dark" else "light"}")
+        appendLine()
+        appendLine(
+            "Orientation   : ${
+                when (config.orientation) {
+                    Configuration.ORIENTATION_LANDSCAPE -> "landscape"
+                    Configuration.ORIENTATION_PORTRAIT -> "portrait"
+                    else -> "undefined"
+                }
+            }"
+        )
+        appendLine("Window Width  : ${display.widthPixels}px | ${container.width.value.toInt()}dp")
+        appendLine("Window Height : ${display.heightPixels}px | ${container.height.value.toInt()}dp")
+        appendLine()
+        appendLine("Font Scale  : ${config.fontScale}")
+        if (Build.VERSION.SDK_INT >= 31) {
+            appendLine("Font Weight : ${config.fontWeightAdjustment}")
+        }
+        appendLine("Density     : ${display.density}")
+        appendLine("Density DPI : ${display.densityDpi}")
+        appendLine()
+        appendLine("Android : ${Build.VERSION.RELEASE}")
+        appendLine("API/SDK : ${Build.VERSION.SDK_INT}")
+    }
+    HeaderScreen(
+        navigator = navigator, title = stringResource(R.string.title_device)
+    ) {
+        Text(
+            text = info,
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Monospace
+        )
+    }
+}
+
+@Preview(uiMode = AndroidUiModes.UI_MODE_NIGHT_NO)
+@Preview(uiMode = AndroidUiModes.UI_MODE_NIGHT_YES)
+@Composable
+private fun PreviewDeviceScreen() {
+    ProxyTheme {
+        DeviceScreen(NavHostController(LocalContext.current))
+    }
+}

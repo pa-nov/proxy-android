@@ -17,6 +17,7 @@ import com.panov.proxy.core.components.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 import com.panov.proxy.screens.about.AboutScreen
+import com.panov.proxy.screens.device.DeviceScreen
 import com.panov.proxy.screens.home.HomeScreen
 import com.panov.proxy.screens.settings.SettingsGeneralScreen
 import com.panov.proxy.screens.settings.SettingsLibrariesScreen
@@ -59,9 +60,7 @@ class MainActivity : ComponentActivity() {
                         AboutScreen(navigator)
                     }
                     composable(Routes.DEVICE) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_device)
-                        ) {}
+                        DeviceScreen(navigator)
                     }
                     composable(Routes.CONFIGS) {
                         HeaderScreen(
