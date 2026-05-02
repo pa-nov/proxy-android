@@ -31,8 +31,8 @@ fun DeviceScreen(navigator: NavHostController) {
     val info = buildString {
         appendLine("Brand: ${Build.MANUFACTURER}")
         appendLine("Model: ${Build.MODEL}")
-        appendLine("Mobile Network Code: ${config.mnc}")
         appendLine("Mobile Country Code: ${config.mcc}")
+        appendLine("Mobile Network Code: ${config.mnc}")
         appendLine()
         appendLine("System Language : ${config.locales[0].language}")
         appendLine("System Theme    : ${if (isSystemInDarkTheme()) "dark" else "light"}")
@@ -58,6 +58,7 @@ fun DeviceScreen(navigator: NavHostController) {
         appendLine()
         appendLine("Android : ${Build.VERSION.RELEASE}")
         appendLine("API/SDK : ${Build.VERSION.SDK_INT}")
+        appendLine("ABIs: ${Build.SUPPORTED_ABIS.joinToString(" | ")}")
     }
     HeaderScreen(
         navigator = navigator, title = stringResource(R.string.title_device)
