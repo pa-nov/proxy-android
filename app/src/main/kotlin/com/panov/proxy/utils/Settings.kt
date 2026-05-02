@@ -1,56 +1,77 @@
 package com.panov.proxy.utils
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import android.os.Build
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-object Settings {
-    private const val FILE_NAME = "SETTINGS"
+val Context.settings: DataStore<Preferences> by preferencesDataStore("settings")
 
+class Settings(private val context: Context) {
+    companion object {
+        val languages = buildList {
+            add("")
+            add("en")
+            add("ru")
+        }.toTypedArray()
 
-    private lateinit var sharedPreferences: SharedPreferences
+        val themes = buildList {
+            add("STATIC+SYSTEM")
+            add("STATIC+LIGHT")
+            add("STATIC+DARK")
+            if (Build.VERSION.SDK_INT >= 31) {
+                add("DYNAMIC+SYSTEM")
+                add("DYNAMIC+LIGHT")
+                add("DYNAMIC+DARK")
+            }
+        }.toTypedArray()
 
-    fun load(context: Context) {
-        sharedPreferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
+        val logs = buildList {
+            add("none")
+            add("error")
+            add("warning")
+            add("info")
+            add("debug")
+        }.toTypedArray()
+
+        val regions = buildList {
+            add("global")
+            add("russia")
+        }.toTypedArray()
     }
 
-    fun isExists(key: String): Boolean {
-        return sharedPreferences.contains(key)
+    object General {
+        val LANGUAGE = stringPreferencesKey("language")
+        val THEME = stringPreferencesKey("theme")
+        val LOG = stringPreferencesKey("log")
     }
 
-
-    fun getBoolean(key: String, defValue: Boolean = false): Boolean {
-        return sharedPreferences.getBoolean(key, defValue)
+    object Routing {
+        val REGION = stringPreferencesKey("region")
     }
 
-    fun setBoolean(key: String, value: Boolean) {
-        sharedPreferences.edit { putBoolean(key, value) }
+    object Privacy {
+        val EXAMPLE = stringPreferencesKey("example")
     }
 
-
-    fun getInt(key: String, defValue: Int = 0): Int {
-        return sharedPreferences.getInt(key, defValue)
+    object Libraries {
+        val EXAMPLE = stringPreferencesKey("example")
     }
 
-    fun setInt(key: String, value: Int) {
-        sharedPreferences.edit { putInt(key, value) }
+    fun <T> getData(key: Preferences.Key<T>, default: T): Flow<T> {
+        return context.settings.data.map { preferences ->
+            preferences[key] ?: default
+        }
     }
 
-
-    fun getLong(key: String, defValue: Long = 0): Long {
-        return sharedPreferences.getLong(key, defValue)
-    }
-
-    fun setLong(key: String, value: Long) {
-        sharedPreferences.edit { putLong(key, value) }
-    }
-
-
-    fun getString(key: String, defValue: String = ""): String {
-        return sharedPreferences.getString(key, defValue) ?: defValue
-    }
-
-    fun setString(key: String, value: String) {
-        sharedPreferences.edit { putString(key, value) }
+    suspend fun <T> setData(key: Preferences.Key<T>, value: T) {
+        context.settings.edit { preferences ->
+            preferences[key] = value
+        }
     }
 }
