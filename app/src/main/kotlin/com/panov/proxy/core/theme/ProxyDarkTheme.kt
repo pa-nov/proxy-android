@@ -7,32 +7,19 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val accent = Color(0xE0E0E0)
-private val onAccent = Color(0x000000)
-
-private val green = Color(0x204020)
-private val onGreen = Color(0x20C020)
-private val yellow = Color(0x404020)
-private val onYellow = Color(0xC0C020)
-private val red = Color(0x402020)
-private val onRed = Color(0xC02020)
-
-
 @Composable
 fun getDarkTheme(): ColorScheme {
     return darkColorScheme(
-        background = Color(0x000000),
-        onBackground = Color(0xFFFFFF),
-        surface = Color(0x181818),
-        onSurface = Color(0xFFFFFF),
-        surfaceVariant = Color(0x282828),
-        onSurfaceVariant = Color(0x808080),
-        primary = accent,
-        onPrimary = onAccent,
-        secondary = accent,
-        onSecondary = onAccent,
-        tertiary = accent,
-        onTertiary = onAccent
+        background = Color("000000"),
+        surface = Color("181818"),
+        surfaceContainer = Color("202020"),
+        inversePrimary = Color("202020"),
+        surfaceVariant = Color("282828"),
+        primary = Color("DDDDDD"),
+        onBackground = Color("FFFFFF"),
+        onSurface = Color("FFFFFF"),
+        onSurfaceVariant = Color("808080"),
+        onPrimary = Color("000000")
     ).applyDarkColors()
 }
 
@@ -42,24 +29,27 @@ fun getDynamicDarkTheme(): ColorScheme {
     return dynamicDarkColorScheme(LocalContext.current).applyDarkColors()
 }
 
-
 private fun ColorScheme.applyDarkColors(): ColorScheme {
+    val green = Color("224422")
+    val yellow = Color("443311")
+    val red = Color("442222")
+
+    val onGreen = Color("AAEEAA")
+    val onYellow = Color("EEDD88")
+    val onRed = Color("EE9999")
+
     return this.copy(
         primaryFixed = green,
         primaryFixedDim = green,
-        onPrimaryFixed = onGreen,
-        onPrimaryFixedVariant = onGreen,
         secondaryFixed = yellow,
         secondaryFixedDim = yellow,
-        onSecondaryFixed = onYellow,
-        onSecondaryFixedVariant = onYellow,
         tertiaryFixed = red,
         tertiaryFixedDim = red,
+        onPrimaryFixed = onGreen,
+        onPrimaryFixedVariant = onGreen,
+        onSecondaryFixed = onYellow,
+        onSecondaryFixedVariant = onYellow,
         onTertiaryFixed = onRed,
         onTertiaryFixedVariant = onRed
     )
-}
-
-private fun Color(color: Long): androidx.compose.ui.graphics.Color {
-    return androidx.compose.ui.graphics.Color(0xFF000000 or color)
 }

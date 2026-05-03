@@ -31,3 +31,7 @@ fun ProxyTheme(style: String = "STATIC+SYSTEM", content: @Composable () -> Unit)
         }, typography = getTypography(), content = content
     )
 }
+
+fun Color(rrggbb: String): androidx.compose.ui.graphics.Color {
+    return androidx.compose.ui.graphics.Color("FF${rrggbb}".toLong(16))
+}
