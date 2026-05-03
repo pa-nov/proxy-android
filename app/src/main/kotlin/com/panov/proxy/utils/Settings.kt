@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -43,24 +45,45 @@ class Settings(private val context: Context) {
             add("global")
             add("russia")
         }.toTypedArray()
+
+        val outbounds = buildList {
+            add("proxy")
+            add("direct")
+            add("block")
+        }.toTypedArray()
     }
 
     object General {
         val LANGUAGE = stringPreferencesKey("language")
         val THEME = stringPreferencesKey("theme")
         val LOG = stringPreferencesKey("log")
+        val AUTO_CHECK_IP = booleanPreferencesKey("auto_check_ip")
+        val DISPLAY_SPEED = booleanPreferencesKey("display_speed")
     }
 
     object Routing {
         val REGION = stringPreferencesKey("region")
+        val OUTBOUND_DEFAULT = stringPreferencesKey("outbound_default")
+        val BLOCK_ADVERTISEMENTS = booleanPreferencesKey("block_advertisements")
     }
 
     object Privacy {
-        val EXAMPLE = stringPreferencesKey("example")
+        val XRAY_PORT_USE_CUSTOM = booleanPreferencesKey("xray_port_use_custom")
+        val XRAY_PORT_CUSTOM = intPreferencesKey("xray_port_custom")
+        val TURN_PORT_USE_CUSTOM = booleanPreferencesKey("turn_port_use_custom")
+        val TURN_PORT_CUSTOM = intPreferencesKey("turn_port_custom")
+        val SEND_HWID = booleanPreferencesKey("send_hwid")
     }
 
     object Libraries {
-        val EXAMPLE = stringPreferencesKey("example")
+        val XRAY_VERSION_CURRENT = stringPreferencesKey("xray_version_current")
+        val XRAY_VERSION_TARGET = stringPreferencesKey("xray_version_target")
+        val TURN_VERSION_CURRENT = stringPreferencesKey("turn_version_current")
+        val TURN_VERSION_TARGET = stringPreferencesKey("turn_version_target")
+        val GEOIP_VERSION_CURRENT = stringPreferencesKey("geoip_version_current")
+        val GEOIP_VERSION_TARGET = stringPreferencesKey("geoip_version_target")
+        val GEOSITE_VERSION_CURRENT = stringPreferencesKey("geosite_version_current")
+        val GEOSITE_VERSION_TARGET = stringPreferencesKey("geosite_version_target")
     }
 
     fun <T> getData(key: Preferences.Key<T>, default: T): Flow<T> {
