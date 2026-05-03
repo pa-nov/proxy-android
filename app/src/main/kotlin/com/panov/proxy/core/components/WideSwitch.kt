@@ -16,9 +16,13 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.panov.proxy.core.theme.ProxyTheme
@@ -34,10 +38,10 @@ fun WideSwitch(
     description: String? = null
 ) {
     Button(
-        onClick = {
-            onCheckedChange(!checked)
-        },
-        modifier = modifier.fillMaxWidth(),
+        onClick = { onCheckedChange(!checked) },
+        modifier = modifier
+            .fillMaxWidth()
+            .dropShadow(RoundedCornerShape(16.dp), Shadow(radius = 8.dp, alpha = 0.5f)),
         enabled = enabled,
         shape = RoundedCornerShape(16.dp),
         colors = ButtonColors(
@@ -46,23 +50,19 @@ fun WideSwitch(
             MaterialTheme.colorScheme.surfaceVariant,
             MaterialTheme.colorScheme.onSurfaceVariant
         ),
-        contentPadding = PaddingValues(8.dp)
+        contentPadding = PaddingValues(12.dp)
     ) {
         if (icon != null) {
             Icon(
-                painter = icon,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(32.dp)
-                    .padding(4.dp)
+                painter = icon, contentDescription = null, modifier = Modifier.size(32.dp)
             )
         }
         Column(
             modifier = Modifier
                 .weight(1f)
                 .heightIn(32.dp)
-                .padding(4.dp, 0.dp),
-            verticalArrangement = Arrangement.Center
+                .padding(if (icon != null) 8.dp else 4.dp, 0.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically)
         ) {
             if (title != null) {
                 Text(
@@ -79,22 +79,22 @@ fun WideSwitch(
         }
         Switch(
             checked = checked, onCheckedChange = null, enabled = enabled, colors = SwitchColors(
-                MaterialTheme.colorScheme.surfaceVariant,
-                MaterialTheme.colorScheme.onSurface,
-                MaterialTheme.colorScheme.onSurface,
+                MaterialTheme.colorScheme.onPrimary,
+                MaterialTheme.colorScheme.primary,
+                MaterialTheme.colorScheme.primary,
                 Color.Transparent,
-                MaterialTheme.colorScheme.onSurface,
-                MaterialTheme.colorScheme.surfaceVariant,
-                MaterialTheme.colorScheme.surfaceVariant,
-                Color.Transparent,
+                MaterialTheme.colorScheme.primary,
                 MaterialTheme.colorScheme.surface,
+                MaterialTheme.colorScheme.primary,
+                Color.Transparent,
+                MaterialTheme.colorScheme.surfaceVariant,
                 MaterialTheme.colorScheme.onSurfaceVariant,
                 MaterialTheme.colorScheme.onSurfaceVariant,
                 Color.Transparent,
                 MaterialTheme.colorScheme.onSurfaceVariant,
-                MaterialTheme.colorScheme.surface,
-                MaterialTheme.colorScheme.surface,
-                Color.Transparent,
+                MaterialTheme.colorScheme.surfaceVariant,
+                MaterialTheme.colorScheme.onSurfaceVariant,
+                Color.Transparent
             )
         )
     }
@@ -107,14 +107,15 @@ private fun PreviewWideSwitches() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues(16.dp)),
+                .padding(PaddingValues(16.dp))
+                .focusProperties { canFocus = false },
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             WideSwitch(
-                checked = false, onCheckedChange = {}, title = "Title"
+                checked = true, onCheckedChange = {}, title = "Title"
             )
             WideSwitch(
-                checked = true, onCheckedChange = {}, title = "Title"
+                checked = false, onCheckedChange = {}, title = "Title"
             )
             WideSwitch(
                 checked = true, onCheckedChange = {}, enabled = false, title = "Title"

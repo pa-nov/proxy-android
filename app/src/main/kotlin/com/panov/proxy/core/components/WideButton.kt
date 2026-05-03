@@ -14,8 +14,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,7 +38,9 @@ fun WideButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .dropShadow(RoundedCornerShape(16.dp), Shadow(radius = 8.dp, alpha = 0.5f)),
         enabled = enabled,
         shape = RoundedCornerShape(16.dp),
         colors = ButtonColors(
@@ -43,23 +49,19 @@ fun WideButton(
             MaterialTheme.colorScheme.surfaceVariant,
             MaterialTheme.colorScheme.onSurfaceVariant
         ),
-        contentPadding = PaddingValues(8.dp)
+        contentPadding = PaddingValues(12.dp)
     ) {
         if (icon != null) {
             Icon(
-                painter = icon,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(32.dp)
-                    .padding(4.dp)
+                painter = icon, contentDescription = null, modifier = Modifier.size(32.dp)
             )
         }
         Column(
             modifier = Modifier
                 .weight(1f)
                 .heightIn(32.dp)
-                .padding(4.dp, 0.dp),
-            verticalArrangement = Arrangement.Center
+                .padding(if (icon != null) 8.dp else 4.dp, 0.dp),
+            verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically)
         ) {
             if (title != null) {
                 Text(
@@ -95,7 +97,8 @@ private fun PreviewWideButtons() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues(16.dp)),
+                .padding(PaddingValues(16.dp))
+                .focusProperties { canFocus = false },
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             WideButton({})

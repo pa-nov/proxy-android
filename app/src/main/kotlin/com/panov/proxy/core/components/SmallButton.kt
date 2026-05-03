@@ -15,6 +15,7 @@ import androidx.compose.material3.RippleConfiguration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -60,7 +61,8 @@ private fun PreviewSmallButtons() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(PaddingValues(16.dp)),
+                .padding(PaddingValues(16.dp))
+                .focusProperties { canFocus = false },
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             SmallButton(
