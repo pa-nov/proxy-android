@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="lang_code">ru</string>
+    <string name="code">ru</string>
 
     <string name="app_name">Proxy</string>
     <string name="app_error">Error</string>
@@ -15,5 +15,33 @@
     <string name="title_settings_routing">Маршрутизация</string>
     <string name="title_settings_privacy">Конфиденциальность</string>
     <string name="title_settings_libraries">Библиотеки</string>
+
+    <string name="action_copy">Скопировать в буфер обмена</string>
+
+    <string name="settings_language">Язык</string>
+    <string name="settings_language_system">Системный</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_dynamic">Dynamic Color</string>
+    <string name="settings_theme_system">Системная</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_log">Уровень логирования</string>
+    <string name="settings_auto_check_ip">Проверять IP после подключения</string>
+    <string name="settings_display_speed">Отображать скорость в уведомлении</string>
+
+    <string name="settings_region">Регион</string>
+    <string name="settings_outbound_default">Outbound по умолчанию</string>
+    <string name="settings_block_advertisements">Блокировать рекламу</string>
+
+    <string name="settings_xray_port_use_custom">Указать порт для XRAY</string>
+    <string name="settings_xray_port_custom">Порт для XRAY</string>
+    <string name="settings_turn_port_use_custom">Указать порт для TURN</string>
+    <string name="settings_turn_port_custom">Порт для TURN</string>
+    <string name="settings_port_random">Случайный</string>
+    <string name="settings_send_hwid">Отправлять HWID</string>
+
+    <string name="about_version">Версия приложения</string>
+    <string name="about_hardware">HWID (Идентификатор устройства)</string>
+    <string name="about_source_code">Исходный код</string>
 
 </resources>

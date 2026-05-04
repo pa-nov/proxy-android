@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="lang_code">en</string>
+    <string name="code">en</string>
 
     <string name="app_name">Proxy</string>
     <string name="app_error">Error</string>
@@ -15,5 +15,33 @@
     <string name="title_settings_routing">Routing</string>
     <string name="title_settings_privacy">Privacy</string>
     <string name="title_settings_libraries">Libraries</string>
+
+    <string name="action_copy">Copy to clipboard</string>
+
+    <string name="settings_language">Language</string>
+    <string name="settings_language_system">System</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_dynamic">Dynamic Color</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_log">Log level</string>
+    <string name="settings_auto_check_ip">Check IP after connection</string>
+    <string name="settings_display_speed">Display speed in notification</string>
+
+    <string name="settings_region">Region</string>
+    <string name="settings_outbound_default">Default Outbound</string>
+    <string name="settings_block_advertisements">Block advertisements</string>
+
+    <string name="settings_xray_port_use_custom">Use custom port for XRAY</string>
+    <string name="settings_xray_port_custom">Port for XRAY</string>
+    <string name="settings_turn_port_use_custom">Use custom port for TURN</string>
+    <string name="settings_turn_port_custom">Port for TURN</string>
+    <string name="settings_port_random">Random</string>
+    <string name="settings_send_hwid">Send HWID</string>
+
+    <string name="about_version">Application version</string>
+    <string name="about_hardware">HWID (Hardware ID)</string>
+    <string name="about_source_code">Source code</string>
 
 </resources>
