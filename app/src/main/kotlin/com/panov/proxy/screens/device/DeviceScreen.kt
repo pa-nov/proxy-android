@@ -1,5 +1,8 @@
 package com.panov.proxy.screens.device
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.res.Configuration
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -22,11 +25,13 @@ import androidx.navigation.NavHostController
 import com.panov.proxy.R
 import com.panov.proxy.core.components.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
+import java.util.Locale
 
 @Composable
 fun DeviceScreen(navigator: NavHostController) {
     val container = LocalWindowInfo.current.containerDpSize
     val display = LocalResources.current.displayMetrics
+    val context = LocalContext.current
     val config = LocalConfiguration.current
     val info = buildString {
         appendLine("Brand: ${Build.MANUFACTURER}")
@@ -34,7 +39,7 @@ fun DeviceScreen(navigator: NavHostController) {
         appendLine("Mobile Country Code: ${config.mcc}")
         appendLine("Mobile Network Code: ${config.mnc}")
         appendLine()
-        appendLine("System Language : ${config.locales[0].language}")
+        appendLine("System Language : ${@SuppressLint("NonObservableLocale") Locale.getDefault().language}")
         appendLine("System Theme    : ${if (isSystemInDarkTheme()) "dark" else "light"}")
         appendLine()
         appendLine(
@@ -61,7 +66,14 @@ fun DeviceScreen(navigator: NavHostController) {
         appendLine("ABIs: ${Build.SUPPORTED_ABIS.joinToString(" | ")}")
     }
     HeaderScreen(
-        navigator = navigator, title = stringResource(R.string.title_device)
+        navigator = navigator,
+        title = stringResource(R.string.title_device),
+        moreMenu = arrayOf(Pair(stringResource(R.string.action_copy)) {
+            context.getSystemService(ClipboardManager::class.java).setPrimaryClip(
+                ClipData.newPlainText("", info)
+            )
+        }),
+        spacing = null
     ) {
         Text(
             text = info,
