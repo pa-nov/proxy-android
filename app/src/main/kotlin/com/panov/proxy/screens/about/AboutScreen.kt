@@ -1,6 +1,10 @@
 package com.panov.proxy.screens.about
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
+import android.provider.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -17,18 +21,32 @@ import com.panov.proxy.screens.Routes
 @Composable
 fun AboutScreen(navigator: NavHostController) {
     val context = LocalContext.current
+    val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
     HeaderScreen(
         navigator = navigator, title = stringResource(R.string.title_about)
     ) {
+        val version = "${packageInfo.versionName} (${packageInfo.versionCode})"
         WideButton(
-            onClick = {},
-            title = stringResource(R.string.app_placeholder),
-            description = "app_version_and_update"
+            onClick = {
+                context.getSystemService(ClipboardManager::class.java).setPrimaryClip(
+                    ClipData.newPlainText("", version)
+                )
+            }, title = stringResource(R.string.about_version), description = version
+        )
+        val hardware = @SuppressLint("HardwareIds") Settings.Secure.getString(
+            context.contentResolver, Settings.Secure.ANDROID_ID
+        ).uppercase()
+        WideButton(
+            onClick = {
+                context.getSystemService(ClipboardManager::class.java).setPrimaryClip(
+                    ClipData.newPlainText("", hardware)
+                )
+            }, title = stringResource(R.string.about_hardware), description = hardware
         )
         WideButton(
-            onClick = { navigator.navigate(Routes.DEVICE) },
-            title = stringResource(R.string.title_device),
-            isExternal = false
+            onClick = {
+                navigator.navigate(Routes.DEVICE)
+            }, title = stringResource(R.string.title_device), isExternal = false
         )
         WideButton(
             onClick = {
@@ -37,10 +55,7 @@ fun AboutScreen(navigator: NavHostController) {
                         Intent.ACTION_VIEW, "https://github.com/pa-nov/proxy-android".toUri()
                     )
                 )
-            },
-            title = stringResource(R.string.app_placeholder),
-            description = "source_code_link (work)",
-            isExternal = true
+            }, title = stringResource(R.string.about_source_code), isExternal = true
         )
     }
 }
