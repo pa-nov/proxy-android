@@ -1,5 +1,6 @@
 package com.panov.proxy
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,8 +9,16 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,13 +33,37 @@ import com.panov.proxy.screens.settings.SettingsLibrariesScreen
 import com.panov.proxy.screens.settings.SettingsPrivacyScreen
 import com.panov.proxy.screens.settings.SettingsRoutingScreen
 import com.panov.proxy.screens.settings.SettingsScreen
+import com.panov.proxy.utils.LocaleManager.applyLocaleFromSettings
+import com.panov.proxy.utils.Settings
 
 class MainActivity : ComponentActivity() {
+    override fun attachBaseContext(context: Context) {
+        super.attachBaseContext(context.applyLocaleFromSettings())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ProxyTheme {
+            val context = LocalContext.current
+            val settings = remember(context) { Settings(context) }
+            val coroutine = rememberCoroutineScope()
+            val theme by settings.getData(
+                Settings.General.THEME, Settings.themes[0]
+            ).collectAsState(Settings.themes[0], coroutine.coroutineContext)
+            val inLightTheme = if (theme.endsWith("DARK")) {
+                false
+            } else if (theme.endsWith("LIGHT")) {
+                true
+            } else {
+                !isSystemInDarkTheme()
+            }
+            SideEffect {
+                WindowCompat.getInsetsController(
+                    window, window.decorView
+                ).isAppearanceLightStatusBars = inLightTheme
+            }
+            ProxyTheme(theme) {
                 val navigator = rememberNavController()
                 NavHost(
                     navController = navigator,
