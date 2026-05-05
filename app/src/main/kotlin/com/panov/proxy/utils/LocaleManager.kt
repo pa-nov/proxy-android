@@ -13,15 +13,15 @@ object LocaleManager {
                 Settings.General.LANGUAGE, Settings.languages[0]
             ).first()
         }
-        if (language.isNotBlank()) {
-            val locale = Locale.forLanguageTag(language)
-            val config = Configuration(this.resources.configuration)
-            config.setLocale(locale)
-            config.setLayoutDirection(locale)
-            return this.createConfigurationContext(config)
-        } else {
-            return this
-        }
+        return if (language.isNotBlank()) this.applyLocale(language) else this
+    }
+
+    fun Context.applyLocale(language: String): Context {
+        val locale = Locale.forLanguageTag(language)
+        val config = Configuration(this.resources.configuration)
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+        return this.createConfigurationContext(config)
     }
 
     fun getDisplayLanguage(language: String, locale: String = language): String {
