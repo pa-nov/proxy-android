@@ -26,10 +26,12 @@ class Settings(private val context: Context) {
             add("STATIC+SYSTEM")
             add("STATIC+LIGHT")
             add("STATIC+DARK")
+            add("STATIC+BLACK")
             if (Build.VERSION.SDK_INT >= 31) {
                 add("DYNAMIC+SYSTEM")
                 add("DYNAMIC+LIGHT")
                 add("DYNAMIC+DARK")
+                add("DYNAMIC+BLACK")
             }
         }.toTypedArray()
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun getDarkTheme(): ColorScheme {
     return darkColorScheme(
-        background = Color("000000"),
+        background = Color("101010"),
         surface = Color("181818"),
         surfaceContainer = Color("202020"),
         inversePrimary = Color("202020"),

@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 fun ProxyTheme(style: String = "STATIC+SYSTEM", content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = if (Build.VERSION.SDK_INT >= 31 && style.startsWith("DYNAMIC")) {
-            if (style.endsWith("DARK")) {
+            if (style.endsWith("BLACK")) {
+                getDynamicDarkTheme().copy(background = Color("000000"))
+            } else if (style.endsWith("DARK")) {
                 getDynamicDarkTheme()
             } else if (style.endsWith("LIGHT")) {
                 getDynamicLightTheme()
@@ -19,7 +21,9 @@ fun ProxyTheme(style: String = "STATIC+SYSTEM", content: @Composable () -> Unit)
                 getDynamicLightTheme()
             }
         } else {
-            if (style.endsWith("DARK")) {
+            if (style.endsWith("BLACK")) {
+                getDarkTheme().copy(background = Color("000000"))
+            } else if (style.endsWith("DARK")) {
                 getDarkTheme()
             } else if (style.endsWith("LIGHT")) {
                 getLightTheme()
@@ -32,6 +36,6 @@ fun ProxyTheme(style: String = "STATIC+SYSTEM", content: @Composable () -> Unit)
     )
 }
 
-fun Color(rrggbb: String): androidx.compose.ui.graphics.Color {
-    return androidx.compose.ui.graphics.Color("FF${rrggbb}".toLong(16))
+fun Color(hex: String): androidx.compose.ui.graphics.Color {
+    return androidx.compose.ui.graphics.Color("FF${hex}".toLong(16))
 }

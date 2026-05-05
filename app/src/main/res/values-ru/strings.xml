@@ -27,6 +27,7 @@
     <string name="settings_theme_system">Системная</string>
     <string name="settings_theme_light">Светлая</string>
     <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_theme_black">Чёрная</string>
     <string name="settings_log">Уровень логирования</string>
     <string name="settings_auto_check_ip">Проверять IP после подключения</string>
     <string name="settings_display_speed">Отображать скорость в уведомлении</string>
