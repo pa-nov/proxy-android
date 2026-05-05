@@ -51,7 +51,9 @@ class MainActivity : ComponentActivity() {
             val theme by settings.getData(
                 Settings.General.THEME, Settings.themes[0]
             ).collectAsState(Settings.themes[0], coroutine.coroutineContext)
-            val inLightTheme = if (theme.endsWith("DARK")) {
+            val inLightTheme = if (theme.endsWith("BLACK")) {
+                false
+            } else if (theme.endsWith("DARK")) {
                 false
             } else if (theme.endsWith("LIGHT")) {
                 true
