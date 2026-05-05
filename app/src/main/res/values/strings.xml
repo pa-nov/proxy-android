@@ -16,6 +16,8 @@
     <string name="title_settings_privacy">Privacy</string>
     <string name="title_settings_libraries">Libraries</string>
 
+    <string name="action_dismiss">Cancel</string>
+    <string name="action_confirm">Done</string>
     <string name="action_copy">Copy to clipboard</string>
 
     <string name="settings_language">Language</string>

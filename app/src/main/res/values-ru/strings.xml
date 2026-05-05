@@ -16,6 +16,8 @@
     <string name="title_settings_privacy">Конфиденциальность</string>
     <string name="title_settings_libraries">Библиотеки</string>
 
+    <string name="action_dismiss">Отмена</string>
+    <string name="action_confirm">Готово</string>
     <string name="action_copy">Скопировать в буфер обмена</string>
 
     <string name="settings_language">Язык</string>
