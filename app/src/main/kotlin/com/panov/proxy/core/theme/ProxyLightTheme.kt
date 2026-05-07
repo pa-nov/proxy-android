@@ -7,19 +7,18 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-@Composable
 fun getLightTheme(): ColorScheme {
     return lightColorScheme(
-        background = Color("FFFFFF"),
-        surface = Color("EEEEEE"),
-        surfaceContainer = Color("DDDDDD"),
-        inversePrimary = Color("DDDDDD"),
-        surfaceVariant = Color("CCCCCC"),
-        primary = Color("202020"),
-        onBackground = Color("000000"),
-        onSurface = Color("000000"),
-        onSurfaceVariant = Color("808080"),
-        onPrimary = Color("FFFFFF")
+        background = getColor("FFFFFF"),
+        surface = getColor("EEEEEE"),
+        surfaceContainer = getColor("DDDDDD"),
+        inversePrimary = getColor("DDDDDD"),
+        surfaceVariant = getColor("CCCCCC"),
+        primary = getColor("202020"),
+        onBackground = getColor("000000"),
+        onSurface = getColor("000000"),
+        onSurfaceVariant = getColor("808080"),
+        onPrimary = getColor("FFFFFF")
     ).applyLightColors()
 }
 
@@ -30,13 +29,13 @@ fun getDynamicLightTheme(): ColorScheme {
 }
 
 private fun ColorScheme.applyLightColors(): ColorScheme {
-    val green = Color("DDEEDD")
-    val yellow = Color("FFEECC")
-    val red = Color("FFDDDD")
+    val green = getColor("DDEEDD")
+    val yellow = getColor("FFEECC")
+    val red = getColor("FFDDDD")
 
-    val onGreen = Color("226622")
-    val onYellow = Color("886600")
-    val onRed = Color("BB2222")
+    val onGreen = getColor("226622")
+    val onYellow = getColor("886600")
+    val onRed = getColor("BB2222")
 
     return this.copy(
         primaryFixed = green,

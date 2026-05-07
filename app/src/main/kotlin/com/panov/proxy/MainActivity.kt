@@ -35,6 +35,8 @@ import com.panov.proxy.screens.settings.SettingsRoutingScreen
 import com.panov.proxy.screens.settings.SettingsScreen
 import com.panov.proxy.utils.LocaleManager.applyLocaleFromSettings
 import com.panov.proxy.utils.Settings
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
     override fun attachBaseContext(context: Context) {
@@ -50,15 +52,16 @@ class MainActivity : ComponentActivity() {
             val coroutine = rememberCoroutineScope()
             val theme by settings.getData(
                 Settings.General.THEME, Settings.themes[0]
-            ).collectAsState(Settings.themes[0], coroutine.coroutineContext)
-            val inLightTheme = if (theme.endsWith("BLACK")) {
-                false
-            } else if (theme.endsWith("DARK")) {
-                false
-            } else if (theme.endsWith("LIGHT")) {
-                true
-            } else {
-                !isSystemInDarkTheme()
+            ).collectAsState(runBlocking {
+                settings.getData(
+                    Settings.General.THEME, Settings.themes[0]
+                ).first()
+            }, coroutine.coroutineContext)
+            val inLightTheme = when {
+                theme.endsWith("BLACK") -> false
+                theme.endsWith("DARK") -> false
+                theme.endsWith("LIGHT") -> true
+                else -> !isSystemInDarkTheme()
             }
             SideEffect {
                 WindowCompat.getInsetsController(

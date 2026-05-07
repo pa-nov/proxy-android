@@ -7,19 +7,18 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-@Composable
 fun getDarkTheme(): ColorScheme {
     return darkColorScheme(
-        background = Color("101010"),
-        surface = Color("181818"),
-        surfaceContainer = Color("202020"),
-        inversePrimary = Color("202020"),
-        surfaceVariant = Color("282828"),
-        primary = Color("DDDDDD"),
-        onBackground = Color("FFFFFF"),
-        onSurface = Color("FFFFFF"),
-        onSurfaceVariant = Color("808080"),
-        onPrimary = Color("000000")
+        background = getColor("101010"),
+        surface = getColor("181818"),
+        surfaceContainer = getColor("202020"),
+        inversePrimary = getColor("202020"),
+        surfaceVariant = getColor("282828"),
+        primary = getColor("DDDDDD"),
+        onBackground = getColor("FFFFFF"),
+        onSurface = getColor("FFFFFF"),
+        onSurfaceVariant = getColor("808080"),
+        onPrimary = getColor("000000")
     ).applyDarkColors()
 }
 
@@ -30,13 +29,13 @@ fun getDynamicDarkTheme(): ColorScheme {
 }
 
 private fun ColorScheme.applyDarkColors(): ColorScheme {
-    val green = Color("224422")
-    val yellow = Color("443311")
-    val red = Color("442222")
+    val green = getColor("224422")
+    val yellow = getColor("443311")
+    val red = getColor("442222")
 
-    val onGreen = Color("AAEEAA")
-    val onYellow = Color("EEDD88")
-    val onRed = Color("EE9999")
+    val onGreen = getColor("AAEEAA")
+    val onYellow = getColor("EEDD88")
+    val onRed = getColor("EE9999")
 
     return this.copy(
         primaryFixed = green,
