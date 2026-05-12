@@ -7,8 +7,8 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
-import com.panov.proxy.core.components.HeaderScreen
-import com.panov.proxy.core.components.WideButton
+import com.panov.proxy.core.HeaderScreen
+import com.panov.proxy.core.button.WideLink
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 
@@ -17,27 +17,27 @@ fun SettingsScreen(navigator: NavHostController) {
     HeaderScreen(
         navigator = navigator, title = stringResource(R.string.title_settings)
     ) {
-        WideButton(
+        WideLink(
             onClick = { navigator.navigate(Routes.Settings.GENERAL) },
             title = stringResource(R.string.title_settings_general),
             isExternal = false
         )
-        WideButton(
+        WideLink(
             onClick = { navigator.navigate(Routes.Settings.ROUTING) },
             title = stringResource(R.string.title_settings_routing),
             isExternal = false
         )
-        WideButton(
+        WideLink(
             onClick = { navigator.navigate(Routes.Settings.PRIVACY) },
             title = stringResource(R.string.title_settings_privacy),
             isExternal = false
         )
-        WideButton(
+        WideLink(
             onClick = { navigator.navigate(Routes.Settings.LIBRARIES) },
             title = stringResource(R.string.title_settings_libraries),
             isExternal = false
         )
-        WideButton(
+        WideLink(
             onClick = { navigator.navigate(Routes.ABOUT) },
             title = stringResource(R.string.title_about),
             isExternal = false

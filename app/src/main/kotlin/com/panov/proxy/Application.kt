@@ -1,8 +1,6 @@
 package com.panov.proxy
 
-import android.app.Application
-
-class ProxyApplication : Application() {
+class Application : android.app.Application() {
     override fun onCreate() {
         super.onCreate()
     }

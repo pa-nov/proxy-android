@@ -7,8 +7,8 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
-import com.panov.proxy.core.components.HeaderScreen
-import com.panov.proxy.core.components.WideButton
+import com.panov.proxy.core.HeaderScreen
+import com.panov.proxy.core.button.WideButton
 import com.panov.proxy.core.theme.ProxyTheme
 
 @Composable

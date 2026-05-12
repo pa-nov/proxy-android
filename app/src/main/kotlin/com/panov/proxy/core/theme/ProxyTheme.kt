@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun ProxyTheme(theme: String = "STATIC+SYSTEM", content: @Composable () -> Unit) {
+fun ProxyTheme(theme: String = "STATIC+SYSTEM", content: @Composable (() -> Unit)) {
     MaterialTheme(
         colorScheme = if (Build.VERSION.SDK_INT >= 31 && theme.startsWith("DYNAMIC")) {
             when {

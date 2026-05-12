@@ -1,4 +1,4 @@
-package com.panov.proxy.core.components
+package com.panov.proxy.core
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -29,15 +29,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
-import com.panov.proxy.core.theme.ProxyTheme
+import com.panov.proxy.core.button.SmallButton
 
 @Composable
 fun HeaderScreen(
@@ -45,7 +43,7 @@ fun HeaderScreen(
     title: String = "",
     moreMenu: Array<Pair<String, (() -> Unit)?>> = emptyArray(),
     spacing: Dp? = null,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable (ColumnScope.() -> Unit)
 ) {
     val scrollState = rememberScrollState()
     val isScrolling by remember {
@@ -142,22 +140,5 @@ fun HeaderScreen(
             verticalArrangement = Arrangement.spacedBy(spacing ?: 16.dp),
             content = content
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewHeaderScreen() {
-    ProxyTheme {
-        HeaderScreen(
-            navigator = NavHostController(LocalContext.current),
-            title = "Title",
-            moreMenu = arrayOf(Pair("", null)),
-            spacing = null
-        ) {
-            repeat(16) {
-                WideButton({})
-            }
-        }
     }
 }

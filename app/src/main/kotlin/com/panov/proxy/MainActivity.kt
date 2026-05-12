@@ -22,7 +22,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.panov.proxy.core.components.HeaderScreen
+import com.panov.proxy.core.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 import com.panov.proxy.screens.about.AboutScreen
@@ -101,9 +101,7 @@ class MainActivity : ComponentActivity() {
                         DeviceScreen(navigator)
                     }
                     composable(Routes.CONFIGS) {
-                        HeaderScreen(
-                            navigator, stringResource(R.string.title_configs)
-                        ) {}
+                        HeaderScreen(navigator, stringResource(R.string.title_configs)) {}
                     }
                     composable(Routes.SETTINGS) {
                         SettingsScreen(navigator)

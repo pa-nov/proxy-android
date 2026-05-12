@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
-import com.panov.proxy.core.components.SmallButton
-import com.panov.proxy.core.components.WideButton
+import com.panov.proxy.core.button.SmallButton
+import com.panov.proxy.core.button.WideLink
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 
@@ -67,7 +67,7 @@ fun HomeScreen(navigator: NavHostController) {
                 modifier = Modifier.fillMaxSize()
             )
         }
-        WideButton(
+        WideLink(
             onClick = {
                 navigator.navigate(Routes.CONFIGS)
             },

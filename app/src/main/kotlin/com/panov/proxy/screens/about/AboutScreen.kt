@@ -13,8 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
-import com.panov.proxy.core.components.HeaderScreen
-import com.panov.proxy.core.components.WideButton
+import com.panov.proxy.core.HeaderScreen
+import com.panov.proxy.core.button.WideButton
+import com.panov.proxy.core.button.WideLink
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 
@@ -43,12 +44,12 @@ fun AboutScreen(navigator: NavHostController) {
                 )
             }, title = stringResource(R.string.about_hardware), description = hardware
         )
-        WideButton(
+        WideLink(
             onClick = {
                 navigator.navigate(Routes.DEVICE)
             }, title = stringResource(R.string.title_device), isExternal = false
         )
-        WideButton(
+        WideLink(
             onClick = {
                 context.startActivity(
                     Intent(

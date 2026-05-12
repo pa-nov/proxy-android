@@ -1,7 +1,5 @@
-package com.panov.proxy.core.components
+package com.panov.proxy.core.dialog
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,9 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.panov.proxy.core.theme.ProxyTheme
 
 @Composable
 fun EditTextDialog(
@@ -48,22 +44,5 @@ fun EditTextDialog(
             singleLine = singleLine,
             shape = RoundedCornerShape(16.dp)
         )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewEditTextDialog() {
-    ProxyTheme {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            EditTextDialog(
-                onDismissRequest = {},
-                onConfirmRequest = {},
-                title = "Title",
-                default = "default"
-            )
-        }
     }
 }

@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
-import com.panov.proxy.core.components.HeaderScreen
+import com.panov.proxy.core.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
 import java.util.Locale
 
