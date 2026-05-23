@@ -3,6 +3,7 @@ package com.panov.proxy
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -10,15 +11,14 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,9 +34,8 @@ import com.panov.proxy.screens.settings.SettingsPrivacyScreen
 import com.panov.proxy.screens.settings.SettingsRoutingScreen
 import com.panov.proxy.screens.settings.SettingsScreen
 import com.panov.proxy.utils.LocaleManager.applyLocaleFromSettings
-import com.panov.proxy.utils.Settings
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import com.panov.proxy.utils.SettingsViewModel
+import kotlinx.coroutines.flow.drop
 
 class MainActivity : ComponentActivity() {
     override fun attachBaseContext(context: Context) {
@@ -47,21 +46,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val context = LocalContext.current
-            val settings = remember(context) { Settings(context) }
-            val coroutine = rememberCoroutineScope()
-            val theme by settings.getData(
-                Settings.General.THEME, Settings.themes[0]
-            ).collectAsState(runBlocking {
-                settings.getData(
-                    Settings.General.THEME, Settings.themes[0]
-                ).first()
-            }, coroutine.coroutineContext)
+            val settings = viewModel(SettingsViewModel::class.java)
+            val language = settings.language
+            val theme by settings.theme.collectAsStateWithLifecycle()
             val inLightTheme = when {
                 theme.endsWith("BLACK") -> false
                 theme.endsWith("DARK") -> false
                 theme.endsWith("LIGHT") -> true
                 else -> !isSystemInDarkTheme()
+            }
+            LaunchedEffect(Unit) {
+                language.drop(1).collect { recreate() }
             }
             SideEffect {
                 WindowCompat.getInsetsController(
@@ -121,5 +116,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        onBackPressedDispatcher.addCallback { finish() }
     }
 }

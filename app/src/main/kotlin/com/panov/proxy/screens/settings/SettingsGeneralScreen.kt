@@ -1,18 +1,17 @@
 package com.panov.proxy.screens.settings
 
 import android.annotation.SuppressLint
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
 import com.panov.proxy.core.HeaderScreen
@@ -23,34 +22,24 @@ import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.utils.LocaleManager
 import com.panov.proxy.utils.LocaleManager.applyLocale
 import com.panov.proxy.utils.Settings
-import kotlinx.coroutines.launch
+import com.panov.proxy.utils.SettingsViewModel
 import java.util.Locale
 
 @Composable
 fun SettingsGeneralScreen(navigator: NavHostController) {
-    val activity = LocalActivity.current
-    val context = LocalContext.current
-    val settings = remember(context) { Settings(context) }
-    val coroutine = rememberCoroutineScope()
+    val settings = viewModel(SettingsViewModel::class.java)
     HeaderScreen(
         navigator = navigator, title = stringResource(R.string.title_settings_general)
     ) {
         run {
-            val language by settings.getData(
-                Settings.General.LANGUAGE, Settings.languages[0]
-            ).collectAsState(Settings.languages[0], coroutine.coroutineContext)
+            val language by settings.language.collectAsStateWithLifecycle()
             var showDialog by remember { mutableStateOf(false) }
             if (showDialog) {
                 SelectItemDialog(
                     onDismissRequest = { showDialog = false },
                     onConfirmRequest = {
                         showDialog = false
-                        coroutine.launch {
-                            settings.setData(
-                                Settings.General.LANGUAGE, Settings.languages[it]
-                            )
-                            activity?.recreate()
-                        }
+                        settings.updateLanguage(Settings.languages[it])
                     },
                     title = stringResource(R.string.settings_language),
                     items = Settings.languages.map {
@@ -66,20 +55,14 @@ fun SettingsGeneralScreen(navigator: NavHostController) {
             )
         }
         run {
-            val theme by settings.getData(
-                Settings.General.THEME, Settings.themes[0]
-            ).collectAsState(Settings.themes[0], coroutine.coroutineContext)
+            val theme by settings.theme.collectAsStateWithLifecycle()
             var showDialog by remember { mutableStateOf(false) }
             if (showDialog) {
                 SelectItemDialog(
                     onDismissRequest = { showDialog = false },
                     onConfirmRequest = {
                         showDialog = false
-                        coroutine.launch {
-                            settings.setData(
-                                Settings.General.THEME, Settings.themes[it]
-                            )
-                        }
+                        settings.updateTheme(Settings.themes[it])
                     },
                     title = stringResource(R.string.settings_theme),
                     items = Settings.themes.map {
@@ -95,20 +78,14 @@ fun SettingsGeneralScreen(navigator: NavHostController) {
             )
         }
         run {
-            val log by settings.getData(
-                Settings.General.LOG, Settings.logs[0]
-            ).collectAsState(Settings.logs[0], coroutine.coroutineContext)
+            val log by settings.log.collectAsStateWithLifecycle()
             var showDialog by remember { mutableStateOf(false) }
             if (showDialog) {
                 SelectItemDialog(
                     onDismissRequest = { showDialog = false },
                     onConfirmRequest = {
                         showDialog = false
-                        coroutine.launch {
-                            settings.setData(
-                                Settings.General.LOG, Settings.logs[it]
-                            )
-                        }
+                        settings.updateLog(Settings.logs[it])
                     },
                     title = stringResource(R.string.settings_log),
                     items = Settings.logs.map {
@@ -124,31 +101,19 @@ fun SettingsGeneralScreen(navigator: NavHostController) {
             )
         }
         run {
-            val autoCheckIP by settings.getData(
-                Settings.General.AUTO_CHECK_IP, false
-            ).collectAsState(false, coroutine.coroutineContext)
+            val autoCheckIP by settings.autoCheckIP.collectAsStateWithLifecycle()
             WideSwitch(
-                checked = autoCheckIP, onCheckedChange = {
-                    coroutine.launch {
-                        settings.setData(
-                            Settings.General.AUTO_CHECK_IP, it
-                        )
-                    }
-                }, title = stringResource(R.string.settings_auto_check_ip)
+                checked = autoCheckIP,
+                onCheckedChange = { settings.updateAutoCheckIP(it) },
+                title = stringResource(R.string.settings_auto_check_ip)
             )
         }
         run {
-            val displaySpeed by settings.getData(
-                Settings.General.DISPLAY_SPEED, false
-            ).collectAsState(false, coroutine.coroutineContext)
+            val displaySpeed by settings.displaySpeed.collectAsStateWithLifecycle()
             WideSwitch(
-                checked = displaySpeed, onCheckedChange = {
-                    coroutine.launch {
-                        settings.setData(
-                            Settings.General.DISPLAY_SPEED, it
-                        )
-                    }
-                }, title = stringResource(R.string.settings_display_speed)
+                checked = displaySpeed,
+                onCheckedChange = { settings.updateDisplaySpeed(it) },
+                title = stringResource(R.string.settings_display_speed)
             )
         }
     }
