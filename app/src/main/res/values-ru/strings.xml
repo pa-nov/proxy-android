@@ -4,8 +4,8 @@
     <string name="code">ru</string>
 
     <string name="app_name">Proxy</string>
-    <string name="app_error">Error</string>
-    <string name="app_placeholder">Placeholder</string>
+    <string name="app_error">{ Ошибка }</string>
+    <string name="app_placeholder">{ Заполнитель }</string>
 
     <string name="title_about">О приложении</string>
     <string name="title_device">Информация об устройстве</string>
@@ -15,6 +15,10 @@
     <string name="title_settings_routing">Маршрутизация</string>
     <string name="title_settings_privacy">Конфиденциальность</string>
     <string name="title_settings_libraries">Библиотеки</string>
+
+    <string name="state_disconnected">Отключено</string>
+    <string name="state_connecting">Подключение</string>
+    <string name="state_connected">Подключено</string>
 
     <string name="action_dismiss">Отмена</string>
     <string name="action_confirm">Готово</string>
@@ -33,7 +37,7 @@
     <string name="settings_display_speed">Отображать скорость в уведомлении</string>
 
     <string name="settings_region">Регион</string>
-    <string name="settings_outbound_default">Outbound по умолчанию</string>
+    <string name="settings_outbound_default">По умолчанию для исходящих</string>
     <string name="settings_block_advertisements">Блокировать рекламу</string>
 
     <string name="settings_xray_port_use_custom">Указать порт для XRAY</string>
@@ -42,7 +46,7 @@
     <string name="settings_send_hwid">Отправлять HWID</string>
 
     <string name="about_version">Версия приложения</string>
-    <string name="about_hardware">HWID (Идентификатор устройства)</string>
+    <string name="about_hardware">HWID (ID устройства)</string>
     <string name="about_source_code">Исходный код</string>
 
 </resources>
