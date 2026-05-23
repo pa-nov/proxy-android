@@ -2,17 +2,13 @@ package com.panov.proxy.utils
 
 import android.content.Context
 import android.content.res.Configuration
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
 object LocaleManager {
     fun Context.applyLocaleFromSettings(): Context {
-        val language = runBlocking {
-            Settings(this@applyLocaleFromSettings).getData(
-                Settings.General.LANGUAGE, Settings.languages[0]
-            ).first()
-        }
+        val language = Settings(this).getLoadedData(
+            Settings.General.LANGUAGE, Settings.languages[0]
+        )
         return if (language.isNotBlank()) this.applyLocale(language) else this
     }
 

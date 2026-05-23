@@ -6,10 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
     private val settings = Settings(application.applicationContext)
@@ -106,9 +104,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
 
     private fun <T> getLoadedStateFlow(key: Preferences.Key<T>, default: T): StateFlow<T> {
-        return getStateFlow(key, runBlocking {
-            settings.getData(key, default).first()
-        })
+        return getStateFlow(
+            key, settings.getLoadedData(key, default)
+        )
     }
 
     private fun <T> getStateFlow(key: Preferences.Key<T>, default: T): StateFlow<T> {

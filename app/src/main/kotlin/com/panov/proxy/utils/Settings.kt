@@ -10,7 +10,9 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 val Context.settings: DataStore<Preferences> by preferencesDataStore("settings")
 
@@ -82,6 +84,12 @@ class Settings(private val context: Context) {
         val GEOIP_VERSION_TARGET = stringPreferencesKey("geoip_version_target")
         val GEOSITE_VERSION_CURRENT = stringPreferencesKey("geosite_version_current")
         val GEOSITE_VERSION_TARGET = stringPreferencesKey("geosite_version_target")
+    }
+
+    fun <T> getLoadedData(key: Preferences.Key<T>, default: T): T {
+        return runBlocking {
+            getData(key, default).first()
+        }
     }
 
     fun <T> getData(key: Preferences.Key<T>, default: T): Flow<T> {
