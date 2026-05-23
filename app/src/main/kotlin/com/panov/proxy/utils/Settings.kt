@@ -72,16 +72,12 @@ class Settings(private val context: Context) {
     object Privacy {
         val XRAY_PORT_USE_CUSTOM = booleanPreferencesKey("xray_port_use_custom")
         val XRAY_PORT_CUSTOM = intPreferencesKey("xray_port_custom")
-        val TURN_PORT_USE_CUSTOM = booleanPreferencesKey("turn_port_use_custom")
-        val TURN_PORT_CUSTOM = intPreferencesKey("turn_port_custom")
         val SEND_HWID = booleanPreferencesKey("send_hwid")
     }
 
     object Libraries {
         val XRAY_VERSION_CURRENT = stringPreferencesKey("xray_version_current")
         val XRAY_VERSION_TARGET = stringPreferencesKey("xray_version_target")
-        val TURN_VERSION_CURRENT = stringPreferencesKey("turn_version_current")
-        val TURN_VERSION_TARGET = stringPreferencesKey("turn_version_target")
         val GEOIP_VERSION_CURRENT = stringPreferencesKey("geoip_version_current")
         val GEOIP_VERSION_TARGET = stringPreferencesKey("geoip_version_target")
         val GEOSITE_VERSION_CURRENT = stringPreferencesKey("geosite_version_current")

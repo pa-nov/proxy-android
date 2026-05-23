@@ -38,8 +38,6 @@
 
     <string name="settings_xray_port_use_custom">Use custom port for XRAY</string>
     <string name="settings_xray_port_custom">Port for XRAY</string>
-    <string name="settings_turn_port_use_custom">Use custom port for TURN</string>
-    <string name="settings_turn_port_custom">Port for TURN</string>
     <string name="settings_port_random">Random</string>
     <string name="settings_send_hwid">Send HWID</string>
 

@@ -24,11 +24,6 @@ fun SettingsLibrariesScreen(navigator: NavHostController) {
         WideButton(
             onClick = {},
             title = stringResource(R.string.app_placeholder),
-            description = "turn_version_and_update"
-        )
-        WideButton(
-            onClick = {},
-            title = stringResource(R.string.app_placeholder),
             description = "geoip_version_and_update"
         )
         WideButton(

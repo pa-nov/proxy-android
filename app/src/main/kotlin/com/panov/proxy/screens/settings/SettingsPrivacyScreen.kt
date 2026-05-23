@@ -77,52 +77,6 @@ fun SettingsPrivacyScreen(navigator: NavHostController) {
             )
         }
         run {
-            val turnPortUseCustom by settings.getData(
-                Settings.Privacy.TURN_PORT_USE_CUSTOM, false
-            ).collectAsState(false, coroutine.coroutineContext)
-            val turnPortCustom by settings.getData(
-                Settings.Privacy.TURN_PORT_CUSTOM, 0
-            ).collectAsState(0, coroutine.coroutineContext)
-            var showDialog by remember { mutableStateOf(false) }
-            if (showDialog) {
-                EditTextDialog(
-                    onDismissRequest = { showDialog = false },
-                    onConfirmRequest = {
-                        if (it.toUShortOrNull() != null) {
-                            showDialog = false
-                            coroutine.launch {
-                                settings.setData(
-                                    Settings.Privacy.TURN_PORT_CUSTOM, it.toInt()
-                                )
-                            }
-                        }
-                    },
-                    title = stringResource(R.string.settings_turn_port_custom),
-                    placeholder = "${UShort.MIN_VALUE} - ${UShort.MAX_VALUE}",
-                    onValueChange = { it.toUShortOrNull() == null },
-                    keyboardType = KeyboardType.Number,
-                    singleLine = true,
-                    default = turnPortCustom.toString()
-                )
-            }
-            WideSwitch(
-                checked = turnPortUseCustom, onCheckedChange = {
-                    coroutine.launch {
-                        settings.setData(
-                            Settings.Privacy.TURN_PORT_USE_CUSTOM, it
-                        )
-                    }
-                }, title = stringResource(R.string.settings_turn_port_use_custom)
-            )
-            WideButton(
-                onClick = { showDialog = true },
-                enabled = turnPortUseCustom,
-                title = stringResource(R.string.settings_turn_port_custom),
-                description = if (turnPortUseCustom) turnPortCustom.toString()
-                else stringResource(R.string.settings_port_random)
-            )
-        }
-        run {
             val sendHWID by settings.getData(
                 Settings.Privacy.SEND_HWID, false
             ).collectAsState(false, coroutine.coroutineContext)

@@ -38,8 +38,6 @@
 
     <string name="settings_xray_port_use_custom">Указать порт для XRAY</string>
     <string name="settings_xray_port_custom">Порт для XRAY</string>
-    <string name="settings_turn_port_use_custom">Указать порт для TURN</string>
-    <string name="settings_turn_port_custom">Порт для TURN</string>
     <string name="settings_port_random">Случайный</string>
     <string name="settings_send_hwid">Отправлять HWID</string>
 
