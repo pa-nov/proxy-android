@@ -3,7 +3,7 @@
 
     <style name="Theme.Proxy" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:colorBackground">#FFFFFF</item>
-        <item name="android:colorPrimary">#4040FF</item>
+        <item name="android:colorPrimary">@color/app_color</item>
     </style>
 
 </resources>
