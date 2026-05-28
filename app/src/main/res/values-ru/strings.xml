@@ -7,6 +7,9 @@
     <string name="app_error">{ Ошибка }</string>
     <string name="app_placeholder">{ Заполнитель }</string>
 
+    <string name="channel_title_foreground">Фоновый сервис</string>
+    <string name="channel_description_foreground">Показывает статус фонового сервиса</string>
+
     <string name="title_about">О приложении</string>
     <string name="title_device">Информация об устройстве</string>
     <string name="title_configs">Конфигурации</string>
@@ -22,7 +25,11 @@
 
     <string name="action_dismiss">Отмена</string>
     <string name="action_confirm">Готово</string>
+    <string name="action_close">Закрыть</string>
+    <string name="action_yes">Да</string>
+    <string name="action_no">Нет</string>
     <string name="action_copy">Скопировать в буфер обмена</string>
+    <string name="action_save">Сохранить в загрузки</string>
 
     <string name="settings_language">Язык</string>
     <string name="settings_language_system">Системный</string>

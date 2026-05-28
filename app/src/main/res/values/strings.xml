@@ -7,6 +7,9 @@
     <string name="app_error">{ Error }</string>
     <string name="app_placeholder">{ Placeholder }</string>
 
+    <string name="channel_title_foreground">Background service</string>
+    <string name="channel_description_foreground">Shows the status of the background service</string>
+
     <string name="title_about">About</string>
     <string name="title_device">Device info</string>
     <string name="title_configs">Configurations</string>
@@ -22,7 +25,11 @@
 
     <string name="action_dismiss">Cancel</string>
     <string name="action_confirm">Done</string>
+    <string name="action_close">Close</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
     <string name="action_copy">Copy to clipboard</string>
+    <string name="action_save">Save to downloads</string>
 
     <string name="settings_language">Language</string>
     <string name="settings_language_system">System</string>
