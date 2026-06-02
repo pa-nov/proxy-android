@@ -1,11 +1,14 @@
 package com.panov.proxy
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -38,6 +41,14 @@ import com.panov.proxy.utils.SettingsViewModel
 import kotlinx.coroutines.flow.drop
 
 class MainActivity : ComponentActivity() {
+    val proxyLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == RESULT_OK) {
+            (application as Application).startProxy()
+        }
+    }
+
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(context.applyLocaleFromSettings())
     }
@@ -117,5 +128,15 @@ class MainActivity : ComponentActivity() {
             }
         }
         onBackPressedDispatcher.addCallback { finish() }
+        if (Build.VERSION.SDK_INT >= 33) {
+            val isGranted = checkSelfPermission(
+                android.Manifest.permission.POST_NOTIFICATIONS
+            )
+            if (isGranted != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 0
+                )
+            }
+        }
     }
 }
