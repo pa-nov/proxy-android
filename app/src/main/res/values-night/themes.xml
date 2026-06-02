@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Proxy" parent="android:Theme.Material.NoActionBar">
+    <style name="app_theme" parent="android:Theme.Material.NoActionBar">
         <item name="android:colorBackground">#000000</item>
         <item name="android:colorPrimary">@color/app_color</item>
     </style>
