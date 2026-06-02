@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusProperties
@@ -19,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
+import com.panov.proxy.core.button.LargeButton
 import com.panov.proxy.core.button.SmallButton
 import com.panov.proxy.core.button.WideButton
 import com.panov.proxy.core.button.WideLink
@@ -65,6 +67,25 @@ private fun PreviewRow(content: @Composable (RowScope.() -> Unit)) {
     }
 }
 
+
+@Preview
+@Composable
+private fun PreviewLargeButton() {
+    PreviewRow {
+        LargeButton(
+            onClick = {},
+            modifier = Modifier.size(128.dp),
+            enabled = true,
+            painter = painterResource(R.drawable.icon_power)
+        )
+        LargeButton(
+            onClick = {},
+            modifier = Modifier.size(128.dp),
+            enabled = false,
+            painter = painterResource(R.drawable.icon_power)
+        )
+    }
+}
 
 @Preview
 @Composable
