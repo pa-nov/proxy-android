@@ -18,6 +18,14 @@ val Context.settings: DataStore<Preferences> by preferencesDataStore("settings")
 
 class Settings(private val context: Context) {
     companion object {
+        const val OUTBOUND_PROXY = "proxy"
+        const val OUTBOUND_DIRECT = "direct"
+        const val OUTBOUND_BLOCK = "block"
+
+        const val PACKAGE_NONE = "none"
+        const val PACKAGE_ALLOW = "allow"
+        const val PACKAGE_DISALLOW = "disallow"
+
         val languages = buildList {
             add("")
             add("en")
@@ -51,9 +59,15 @@ class Settings(private val context: Context) {
         }.toTypedArray()
 
         val outbounds = buildList {
-            add("proxy")
-            add("direct")
-            add("block")
+            add(OUTBOUND_PROXY)
+            add(OUTBOUND_DIRECT)
+            add(OUTBOUND_BLOCK)
+        }.toTypedArray()
+
+        val packages = buildList {
+            add(PACKAGE_NONE)
+            add(PACKAGE_ALLOW)
+            add(PACKAGE_DISALLOW)
         }.toTypedArray()
     }
 
