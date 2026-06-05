@@ -1,8 +1,6 @@
 package com.panov.proxy.screens.about
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
 import android.provider.Settings
 import androidx.compose.runtime.Composable
@@ -18,6 +16,7 @@ import com.panov.proxy.core.button.WideButton
 import com.panov.proxy.core.button.WideLink
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
+import com.panov.proxy.utils.ExportManager
 
 @Composable
 fun AboutScreen(navigator: NavHostController) {
@@ -26,28 +25,33 @@ fun AboutScreen(navigator: NavHostController) {
     HeaderScreen(
         navigator = navigator, title = stringResource(R.string.title_about)
     ) {
-        val version = "${packageInfo.versionName} (${packageInfo.versionCode})"
-        WideButton(
-            onClick = {
-                context.getSystemService(ClipboardManager::class.java).setPrimaryClip(
-                    ClipData.newPlainText("", version)
-                )
-            }, title = stringResource(R.string.about_version), description = version
-        )
-        val hardware = @SuppressLint("HardwareIds") Settings.Secure.getString(
-            context.contentResolver, Settings.Secure.ANDROID_ID
-        ).uppercase()
-        WideButton(
-            onClick = {
-                context.getSystemService(ClipboardManager::class.java).setPrimaryClip(
-                    ClipData.newPlainText("", hardware)
-                )
-            }, title = stringResource(R.string.about_hardware), description = hardware
-        )
+        run {
+            val title = stringResource(R.string.about_version)
+            val version = "${packageInfo.versionName} (${packageInfo.versionCode})"
+            WideButton(
+                onClick = {
+                    ExportManager.copyToClipboard(
+                        context, version, title
+                    )
+                }, title = title, description = version
+            )
+        }
+        run {
+            val title = stringResource(R.string.about_hardware)
+            val hardware = @SuppressLint("HardwareIds") Settings.Secure.getString(
+                context.contentResolver, Settings.Secure.ANDROID_ID
+            ).uppercase()
+            WideButton(
+                onClick = {
+                    ExportManager.copyToClipboard(
+                        context, hardware, title
+                    )
+                }, title = title, description = hardware
+            )
+        }
         WideLink(
-            onClick = {
-                navigator.navigate(Routes.DEVICE)
-            }, title = stringResource(R.string.title_device), isExternal = false
+            onClick = { navigator.navigate(Routes.DEVICE) },
+            title = stringResource(R.string.title_device)
         )
         WideLink(
             onClick = {
