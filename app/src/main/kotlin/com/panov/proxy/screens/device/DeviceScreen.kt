@@ -1,12 +1,11 @@
 package com.panov.proxy.screens.device
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.res.Configuration
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,14 +24,16 @@ import androidx.navigation.NavHostController
 import com.panov.proxy.R
 import com.panov.proxy.core.HeaderScreen
 import com.panov.proxy.core.theme.ProxyTheme
+import com.panov.proxy.utils.ExportManager
 import java.util.Locale
 
 @Composable
 fun DeviceScreen(navigator: NavHostController) {
-    val container = LocalWindowInfo.current.containerDpSize
-    val display = LocalResources.current.displayMetrics
+    val resources = LocalResources.current
     val context = LocalContext.current
+    val window = LocalWindowInfo.current
     val config = LocalConfiguration.current
+    val title = stringResource(R.string.title_device)
     val info = buildString {
         appendLine("Brand: ${Build.MANUFACTURER}")
         appendLine("Model: ${Build.MODEL}")
@@ -51,38 +52,46 @@ fun DeviceScreen(navigator: NavHostController) {
                 }
             }"
         )
-        appendLine("Window Width  : ${display.widthPixels}px | ${container.width.value.toInt()}dp")
-        appendLine("Window Height : ${display.heightPixels}px | ${container.height.value.toInt()}dp")
+        appendLine("Window Width  : ${window.containerSize.width}px | ${window.containerDpSize.width.value.toInt()}dp")
+        appendLine("Window Height : ${window.containerSize.height}px | ${window.containerDpSize.height.value.toInt()}dp")
         appendLine()
         appendLine("Font Scale  : ${config.fontScale}")
         if (Build.VERSION.SDK_INT >= 31) {
             appendLine("Font Weight : ${config.fontWeightAdjustment}")
         }
-        appendLine("Density     : ${display.density}")
-        appendLine("Density DPI : ${display.densityDpi}")
+        appendLine("Density     : ${resources.displayMetrics.density}")
+        appendLine("Density DPI : ${resources.displayMetrics.densityDpi}")
         appendLine()
         appendLine("Android : ${Build.VERSION.RELEASE}")
         appendLine("API/SDK : ${Build.VERSION.SDK_INT}")
         appendLine("ABIs: ${Build.SUPPORTED_ABIS.joinToString(" | ")}")
     }
     HeaderScreen(
-        navigator = navigator,
-        title = stringResource(R.string.title_device),
-        moreMenu = arrayOf(Pair(stringResource(R.string.action_copy)) {
-            context.getSystemService(ClipboardManager::class.java).setPrimaryClip(
-                ClipData.newPlainText("", info)
-            )
-        }),
-        spacing = null
+        navigator = navigator, title = title, moreMenu = buildList {
+            add(Pair(stringResource(R.string.action_copy)) {
+                ExportManager.copyToClipboard(
+                    context, info, title
+                )
+            })
+            if (Build.VERSION.SDK_INT >= 29) {
+                add(Pair(stringResource(R.string.action_save)) {
+                    ExportManager.saveToDownloads(
+                        context, info, "device.txt", ExportManager.MIME_TYPE_TEXT
+                    )
+                })
+            }
+        }.toTypedArray()
     ) {
-        Text(
-            text = info,
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Monospace
-        )
+        SelectionContainer {
+            Text(
+                text = info,
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+        }
     }
 }
 
