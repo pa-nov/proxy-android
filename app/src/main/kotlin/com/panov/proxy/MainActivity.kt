@@ -70,9 +70,11 @@ class MainActivity : ComponentActivity() {
                 language.drop(1).collect { recreate() }
             }
             SideEffect {
-                WindowCompat.getInsetsController(
-                    window, window.decorView
-                ).isAppearanceLightStatusBars = inLightTheme
+                window.statusBarColor = android.graphics.Color.TRANSPARENT
+                window.navigationBarColor = android.graphics.Color.TRANSPARENT
+                val controller = WindowCompat.getInsetsController(window, window.decorView)
+                controller.isAppearanceLightStatusBars = inLightTheme
+                controller.isAppearanceLightNavigationBars = inLightTheme
             }
             ProxyTheme(theme) {
                 val navigator = rememberNavController()
