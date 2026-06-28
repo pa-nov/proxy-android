@@ -13,14 +13,9 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,13 +32,14 @@ import com.panov.proxy.core.button.SmallButton
 import com.panov.proxy.core.button.WideLink
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
-import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.milliseconds
+import com.panov.proxy.utils.ComposeUtils.getPowerState
 
 @Composable
 fun HomeScreen(navigator: NavHostController) {
     val activity = LocalActivity.current as MainActivity
-    val powerState = getPowerState()
+    val isProxyEnabled by Application.isProxyEnabled.collectAsStateWithLifecycle()
+    val isProxyConnected by Application.isProxyConnected.collectAsStateWithLifecycle()
+    val powerState = getPowerState(isProxyEnabled, isProxyConnected)
     val powerColor by animateColorAsState(powerState.first)
     val onPowerColor by animateColorAsState(powerState.second)
     Box(
@@ -77,7 +73,7 @@ fun HomeScreen(navigator: NavHostController) {
     ) {
         LargeButton(
             onClick = {
-                if (Application.isProxyEnabled.value) {
+                if (isProxyEnabled) {
                     (activity.application as Application).stopProxy()
                 } else {
                     val prepare = VpnService.prepare(activity.applicationContext)
@@ -109,45 +105,5 @@ fun HomeScreen(navigator: NavHostController) {
 private fun PreviewHomeScreen() {
     ProxyTheme {
         HomeScreen(NavHostController(LocalContext.current))
-    }
-}
-
-
-@Composable
-private fun getPowerState(): Triple<Color, Color, String> {
-    val isProxyEnabled by Application.isProxyEnabled.collectAsStateWithLifecycle()
-    val isProxyConnected by Application.isProxyConnected.collectAsStateWithLifecycle()
-    return if (isProxyEnabled) {
-        if (isProxyConnected) {
-            Triple(
-                MaterialTheme.colorScheme.primaryFixed,
-                MaterialTheme.colorScheme.onPrimaryFixed,
-                stringResource(R.string.state_connected)
-            )
-        } else {
-            var dots by remember { mutableStateOf("") }
-            LaunchedEffect(Unit) {
-                while (true) {
-                    delay(250.milliseconds)
-                    dots = when (dots) {
-                        "" -> "."
-                        "." -> ".."
-                        ".." -> "..."
-                        else -> ""
-                    }
-                }
-            }
-            Triple(
-                MaterialTheme.colorScheme.secondaryFixed,
-                MaterialTheme.colorScheme.onSecondaryFixed,
-                stringResource(R.string.state_connecting) + dots
-            )
-        }
-    } else {
-        Triple(
-            MaterialTheme.colorScheme.tertiaryFixed,
-            MaterialTheme.colorScheme.onTertiaryFixed,
-            stringResource(R.string.state_disconnected)
-        )
     }
 }

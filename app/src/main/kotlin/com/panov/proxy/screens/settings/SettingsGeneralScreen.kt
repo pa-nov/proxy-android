@@ -1,6 +1,5 @@
 package com.panov.proxy.screens.settings
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,11 +18,10 @@ import com.panov.proxy.core.button.WideButton
 import com.panov.proxy.core.button.WideSwitch
 import com.panov.proxy.core.dialog.SelectItemDialog
 import com.panov.proxy.core.theme.ProxyTheme
-import com.panov.proxy.utils.LocaleManager
-import com.panov.proxy.utils.LocaleManager.applyLocale
+import com.panov.proxy.utils.ComposeUtils.getLanguageText
+import com.panov.proxy.utils.ComposeUtils.getThemeText
 import com.panov.proxy.utils.Settings
 import com.panov.proxy.utils.SettingsViewModel
-import java.util.Locale
 
 @Composable
 fun SettingsGeneralScreen(navigator: NavHostController) {
@@ -125,48 +123,5 @@ fun SettingsGeneralScreen(navigator: NavHostController) {
 private fun PreviewSettingsGeneralScreen() {
     ProxyTheme {
         SettingsGeneralScreen(NavHostController(LocalContext.current))
-    }
-}
-
-
-@Composable
-private fun getLanguageText(language: String, locale: String = language): String {
-    val system = LocalContext.current.applyLocale(
-        @SuppressLint("NonObservableLocale") Locale.getDefault().language
-    ).getString(R.string.code)
-    val locale = locale.ifBlank { system }
-    return if (language.isBlank()) {
-        buildString {
-            append(
-                LocalContext.current.applyLocale(locale).getString(
-                    R.string.settings_language_system
-                )
-            )
-            append(" (${LocaleManager.getDisplayLanguage(system, locale)})")
-        }
-    } else {
-        LocaleManager.getDisplayLanguage(language, locale)
-    }
-}
-
-@Composable
-private fun getThemeText(theme: String): String {
-    return buildString {
-        append(
-            when {
-                theme.endsWith("SYSTEM") -> stringResource(R.string.settings_theme_system)
-                theme.endsWith("LIGHT") -> stringResource(R.string.settings_theme_light)
-                theme.endsWith("DARK") -> stringResource(R.string.settings_theme_dark)
-                theme.endsWith("BLACK") -> stringResource(R.string.settings_theme_black)
-                else -> stringResource(R.string.app_error)
-            }
-        )
-        append(
-            when {
-                theme.startsWith("STATIC") -> ""
-                theme.startsWith("DYNAMIC") -> " - ${stringResource(R.string.settings_theme_dynamic)}"
-                else -> " - ${stringResource(R.string.app_error)}"
-            }
-        )
     }
 }
