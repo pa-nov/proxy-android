@@ -38,6 +38,7 @@ import com.panov.proxy.core.button.WideLink
 import com.panov.proxy.core.theme.ProxyTheme
 import com.panov.proxy.screens.Routes
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun HomeScreen(navigator: NavHostController) {
@@ -54,7 +55,9 @@ fun HomeScreen(navigator: NavHostController) {
     ) {
         Text(
             text = powerState.third,
-            modifier = Modifier.align(Alignment.TopStart),
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(8.dp),
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.titleLarge
         )
@@ -63,6 +66,15 @@ fun HomeScreen(navigator: NavHostController) {
             modifier = Modifier.align(Alignment.TopEnd),
             painter = painterResource(R.drawable.icon_settings)
         )
+        WideLink(
+            onClick = { navigator.navigate(Routes.CONFIGS) },
+            modifier = Modifier.align(Alignment.BottomCenter),
+            title = stringResource(R.string.title_configs)
+        )
+    }
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
         LargeButton(
             onClick = {
                 if (Application.isProxyEnabled.value) {
@@ -87,11 +99,6 @@ fun HomeScreen(navigator: NavHostController) {
                 MaterialTheme.colorScheme.onSurfaceVariant
             ),
             painter = painterResource(R.drawable.icon_power)
-        )
-        WideLink(
-            onClick = { navigator.navigate(Routes.CONFIGS) },
-            modifier = Modifier.align(Alignment.BottomCenter),
-            title = stringResource(R.string.title_configs)
         )
     }
 }
@@ -121,7 +128,7 @@ private fun getPowerState(): Triple<Color, Color, String> {
             var dots by remember { mutableStateOf("") }
             LaunchedEffect(Unit) {
                 while (true) {
-                    delay(250)
+                    delay(250.milliseconds)
                     dots = when (dots) {
                         "" -> "."
                         "." -> ".."
