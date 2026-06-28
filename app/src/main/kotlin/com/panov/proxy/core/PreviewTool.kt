@@ -254,8 +254,9 @@ private fun PreviewHeaderScreen() {
         HeaderScreen(
             navigator = NavHostController(LocalContext.current),
             title = "Title",
-            moreMenu = arrayOf(Pair("", null)),
-            spacing = null
+            moreMenu = buildList {
+                add(Pair("", null))
+            }.toTypedArray()
         ) {
             repeat(16) {
                 WideButton({})

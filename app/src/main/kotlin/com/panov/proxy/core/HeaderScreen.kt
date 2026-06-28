@@ -6,14 +6,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.visible
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -31,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.panov.proxy.R
@@ -42,7 +48,6 @@ fun HeaderScreen(
     navigator: NavHostController,
     title: String = "",
     moreMenu: Array<Pair<String, (() -> Unit)?>> = emptyArray(),
-    spacing: Dp? = null,
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     val scrollState = rememberScrollState()
@@ -62,13 +67,17 @@ fun HeaderScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .navigationBarsPadding()
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(headerColor)
                 .statusBarsPadding()
+                .windowInsetsPadding(
+                    WindowInsets.navigationBars.only(
+                        WindowInsetsSides.Horizontal
+                    )
+                )
                 .padding(16.dp)
         ) {
             SmallButton(
@@ -94,6 +103,8 @@ fun HeaderScreen(
                     DropdownMenu(
                         expanded = expanded,
                         onDismissRequest = { expanded = false },
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        shape = RoundedCornerShape(16.dp),
                         containerColor = MaterialTheme.colorScheme.surfaceContainer
                     ) {
                         moreMenu.forEach { item ->
@@ -101,7 +112,6 @@ fun HeaderScreen(
                                 text = {
                                     Text(
                                         text = item.first,
-                                        modifier = Modifier.padding(8.dp),
                                         style = MaterialTheme.typography.titleMedium
                                     )
                                 },
@@ -117,7 +127,8 @@ fun HeaderScreen(
                                     MaterialTheme.colorScheme.onSurfaceVariant,
                                     MaterialTheme.colorScheme.onSurfaceVariant,
                                     MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                                ),
+                                contentPadding = PaddingValues(16.dp)
                             )
                         }
                     }
@@ -136,8 +147,9 @@ fun HeaderScreen(
                 .weight(1f)
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
+                .navigationBarsPadding()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(spacing ?: 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             content = content
         )
     }
